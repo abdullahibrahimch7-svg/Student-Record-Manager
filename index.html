@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1018">
+  <title>Student Records · Campus</title>
+  <link rel="stylesheet" href="static/style.css?v=7">
+  <script type="module" src="static/app.js"></script>
+</head>
+<body>
+  <main class="auth-screen" id="auth-screen">
+    <a class="brand auth-brand" href="#" aria-label="Campus home">
+      <span class="brand-mark">C</span>
+      <span><strong>campus</strong><small>STUDENT PORTAL</small></span>
+    </a>
+    <section class="auth-card">
+      <div class="auth-icon">✳</div>
+      <div class="eyebrow">YOUR SCHOOL WORKSPACE</div>
+      <h1 id="auth-title">Welcome back<span class="heading-dot">.</span></h1>
+      <p class="auth-description" id="auth-description">Sign in to access your student records.</p>
+      <div class="form-error hidden" id="auth-error" role="alert"></div>
+      <form id="auth-form">
+        <div class="field">
+          <label for="account-email">Email address</label>
+          <input id="account-email" name="email" type="email" maxlength="254" placeholder="you@school.com" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="account-password">Password</label>
+          <input id="account-password" name="password" type="password" minlength="8" maxlength="128" placeholder="At least 8 characters" autocomplete="current-password" required>
+        </div>
+        <button class="button button-primary auth-submit" id="auth-submit" type="submit">Sign in</button>
+      </form>
+      <button class="auth-link hidden" id="reset-password" type="button">Forgot your password?</button>
+      <div class="auth-switch"><span id="switch-copy">New to Campus?</span> <button type="button" class="text-button" id="switch-mode">Create an account</button></div>
+      <p class="auth-note"><span>♢</span> Your records are private to your account and sync across your signed-in devices.</p>
+      <p class="creator-credit">Created by Abdullah Ibrahim</p>
+    </section>
+  </main>
+  <div class="app-shell hidden">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Campus home">
+        <span class="brand-mark">C</span>
+        <span><strong>campus</strong><small>STUDENT PORTAL</small></span>
+      </a>
+      <div class="nav-caption">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-view="overview"><span class="nav-icon">⌂</span> Overview</button>
+        <button class="nav-link" data-view="students"><span class="nav-icon">▤</span> Students <span class="nav-count" id="nav-count">0</span></button>
+        <button class="nav-link" data-view="performance"><span class="nav-icon">⌁</span> Performance</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <span class="help-spark">✳</span>
+          <strong>Made for better learning</strong>
+          <p>Keep every student's progress in one clear place.</p>
+        </div>
+        <div class="profile">
+          <div class="avatar profile-avatar" id="account-avatar">?</div>
+          <div><strong>My account</strong><small id="account-email-label">Signed in</small></div>
+          <span class="profile-dot"></span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><strong id="breadcrumb-current">Overview</strong></div>
+        <div class="top-actions">
+          <span class="today-label" id="today-label"></span>
+          <span class="local-save-label"><span class="live-dot"></span> Synced to your account</span>
+          <button class="button button-quiet button-small" id="logout-button">Sign out</button>
+          <button class="button button-primary button-small" id="top-add-button"><span>＋</span> Add student</button>
+        </div>
+      </header>
+
+      <div class="page-wrap">
+        <section class="view-panel" id="overview-view">
+          <div class="page-heading">
+            <div><div class="eyebrow">YOUR SCHOOL AT A GLANCE</div><h1>Good morning<span class="heading-dot">.</span></h1><p>Here’s what’s happening with your students today.</p></div>
+            <button class="button button-quiet" id="export-button"><span>⇩</span> Export report</button>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card">
+              <div class="stat-top"><span class="stat-icon icon-lilac">♙</span><span class="stat-note">Across all records</span></div>
+              <div class="stat-value" id="stat-students">0</div><div class="stat-label">Total students</div>
+              <div class="stat-bottom"><span class="stat-accent accent-lilac" id="stat-student-note">Your school roster</span></div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-top"><span class="stat-icon icon-blue">▤</span><span class="stat-note">Across all students</span></div>
+              <div class="stat-value" id="stat-subjects">0</div><div class="stat-label">Subjects recorded</div>
+              <div class="stat-bottom"><span class="stat-accent accent-blue">Marks entered</span></div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-top"><span class="stat-icon icon-green">↗</span><span class="stat-note">Weighted average</span></div>
+              <div class="stat-value"><span id="stat-average">0</span><span class="stat-unit">%</span></div><div class="stat-label">Average performance</div>
+              <div class="stat-bottom"><span class="stat-accent accent-green">Across the whole class</span></div>
+            </article>
+            <article class="stat-card">
+              <div class="stat-top"><span class="stat-icon icon-amber">✦</span><span class="stat-note">Highest overall score</span></div>
+              <div class="stat-value stat-value-name" id="stat-top-student">—</div><div class="stat-label">Top performer</div>
+              <div class="stat-bottom"><span class="stat-accent accent-amber" id="stat-top-score">Add records to get started</span></div>
+            </article>
+          </div>
+
+          <div class="content-grid">
+            <section class="panel roster-panel">
+              <div class="panel-heading">
+                <div><h2>Student overview</h2><p>A quick look at your class roster</p></div>
+                <button class="text-button" data-navigate="students">View all <span>→</span></button>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>STUDENT</th><th>SUBJECTS</th><th>OVERALL SCORE</th><th>STATUS</th><th></th></tr></thead>
+                  <tbody id="overview-table"></tbody>
+                </table>
+                <div class="empty-state hidden" id="overview-empty"><span class="empty-icon">✳</span><strong>Your roster starts here</strong><p>Add your first student to see class progress and performance at a glance.</p><button class="button button-primary" data-open-add>Add a student</button></div>
+              </div>
+            </section>
+            <aside class="panel quick-panel">
+              <div class="panel-heading"><div><h2>Quick actions</h2><p>Make a change in a few clicks</p></div></div>
+              <button class="action-card" data-open-add><span class="action-icon action-add">＋</span><span><strong>Add a student</strong><small>Create a student record</small></span><span class="action-arrow">→</span></button>
+              <button class="action-card" data-navigate="students"><span class="action-icon action-manage">▤</span><span><strong>Manage students</strong><small>Search, review and update</small></span><span class="action-arrow">→</span></button>
+              <button class="action-card" data-navigate="performance"><span class="action-icon action-chart">⌁</span><span><strong>View performance</strong><small>Compare class results</small></span><span class="action-arrow">→</span></button>
+              <div class="tip-card"><span>✦</span><p><strong>A little progress adds up.</strong><br>Track marks by subject to spot student strengths.</p></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view-panel hidden" id="students-view">
+          <div class="page-heading">
+            <div><div class="eyebrow">YOUR CLASS ROSTER</div><h1>Students<span class="heading-dot">.</span></h1><p>Search, review and manage every student record.</p></div>
+            <button class="button button-primary" data-open-add><span>＋</span> Add student</button>
+          </div>
+          <section class="panel all-students-panel">
+            <div class="roster-toolbar">
+              <div class="search-box"><span>⌕</span><input id="student-search" type="search" placeholder="Search students…" aria-label="Search students"></div>
+              <div class="toolbar-filters">
+                <select id="status-filter" aria-label="Filter by performance"><option value="all">All students</option><option value="on-track">On track · 50%+</option><option value="needs-support">Needs support · below 50%</option></select>
+                <select id="sort-select" aria-label="Sort students"><option value="name">Name A–Z</option><option value="score-desc">Highest score</option><option value="score-asc">Lowest score</option></select>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>STUDENT</th><th>SUBJECTS</th><th>OVERALL SCORE</th><th>STATUS</th><th></th></tr></thead>
+                <tbody id="students-table"></tbody>
+              </table>
+              <div class="empty-state hidden" id="students-empty"><span class="empty-icon">⌕</span><strong id="students-empty-title">No students found</strong><p id="students-empty-copy">Try another search or add your first student.</p></div>
+            </div>
+            <div class="table-footer"><span id="student-result-count">Showing 0 students</span><button class="text-button" id="clear-filters">Clear filters</button></div>
+          </section>
+        </section>
+
+        <section class="view-panel hidden" id="performance-view">
+          <div class="page-heading">
+            <div><div class="eyebrow">CLASS INSIGHTS</div><h1>Performance<span class="heading-dot">.</span></h1><p>See how your students are progressing overall.</p></div>
+            <span class="chart-pill"><span class="live-dot"></span> Live class data</span>
+          </div>
+          <div class="performance-summary panel">
+            <div><span class="eyebrow">CLASS AVERAGE</span><div class="performance-average"><span id="performance-average">0</span><small>%</small></div><p>Weighted across all recorded subjects</p></div>
+            <div class="summary-divider"></div>
+            <div class="performance-stat"><span class="mini-stat-icon icon-green">↗</span><div><strong id="on-track-count">0</strong><small>Students on track</small></div></div>
+            <div class="performance-stat"><span class="mini-stat-icon icon-amber">◎</span><div><strong id="support-count">0</strong><small>Need extra support</small></div></div>
+            <div class="performance-stat"><span class="mini-stat-icon icon-blue">♙</span><div><strong id="performance-student-count">0</strong><small>Students assessed</small></div></div>
+          </div>
+          <section class="panel chart-panel">
+            <div class="panel-heading"><div><h2>Student performance</h2><p>Overall marks earned out of all marks available</p></div><span class="chart-legend"><i></i> Overall score</span></div>
+            <div id="performance-chart" class="performance-chart"></div>
+            <div class="empty-state hidden" id="chart-empty"><span class="empty-icon">⌁</span><strong>No performance data yet</strong><p>Add students and subject marks to see how the class is doing.</p><button class="button button-primary" data-open-add>Add a student</button></div>
+          </section>
+        </section>
+      </div>
+      <footer class="page-footer"><span>Campus Student Portal</span><span>Created by Abdullah Ibrahim</span></footer>
+    </main>
+  </div>
+
+  <div class="toast-region" id="toast-region" aria-live="polite"></div>
+  <dialog class="app-dialog" id="form-dialog">
+    <form id="student-form" novalidate>
+      <div class="dialog-heading"><div><div class="eyebrow" id="form-eyebrow">NEW RECORD</div><h2 id="form-title">Add a student</h2><p id="form-description">Create a profile and enter their first subject.</p></div><button type="button" class="dialog-close" data-close-dialog aria-label="Close dialog">×</button></div>
+      <div class="form-error hidden" id="form-error" role="alert"></div>
+      <div class="field" id="name-field"><label for="student-name">Student name</label><input id="student-name" name="name" type="text" maxlength="80" placeholder="e.g. Alex Morgan" autocomplete="off" required></div>
+      <div class="field"><label for="subject-name">Subject</label><input id="subject-name" name="subject" type="text" maxlength="80" placeholder="e.g. Mathematics" required></div>
+      <div class="form-row">
+        <div class="field"><label for="total-marks">Total marks</label><input id="total-marks" name="total" type="number" min="1" step="1" placeholder="100" required></div>
+        <div class="field"><label for="obtained-marks">Marks earned</label><input id="obtained-marks" name="obtained" type="number" min="0" step="1" placeholder="85" required></div>
+      </div>
+      <div class="dialog-actions"><button type="button" class="button button-quiet" data-close-dialog>Cancel</button><button type="submit" class="button button-primary" id="form-submit">Save student</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="app-dialog detail-dialog" id="detail-dialog">
+    <div id="detail-content"></div>
+  </dialog>
+</body>
+</html>
