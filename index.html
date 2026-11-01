@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0c1018">
   <title>Student Records · Campus</title>
-  <link rel="stylesheet" href="static/style.css?v=7">
+  <link rel="stylesheet" href="static/style.css?v=9">
   <script type="module" src="static/app.js"></script>
 </head>
 <body>
@@ -32,8 +32,14 @@
         <button class="button button-primary auth-submit" id="auth-submit" type="submit">Sign in</button>
       </form>
       <button class="auth-link hidden" id="reset-password" type="button">Forgot your password?</button>
+      <div class="auth-divider"><span>or</span></div>
+      <button class="button button-google" id="google-sign-in" type="button">
+        <svg aria-hidden="true" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 3.94 13.22l7.98 6.19C13.82 13.72 18.49 9.5 24 9.5Z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94a11.2 11.2 0 0 1-4.8 7.35l7.74 6c4.52-4.18 7.1-10.34 7.1-17.82Z"/><path fill="#FBBC05" d="M11.92 28.59a14.5 14.5 0 0 1 0-9.18l-7.98-6.2a23.9 23.9 0 0 0 0 21.58l7.98-6.2Z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.9-5.8l-7.74-6c-2.14 1.44-4.87 2.3-8.16 2.3-5.51 0-10.18-4.22-12.08-9.91l-7.98 6.2C6.51 42.62 14.62 48 24 48Z"/></svg>
+        Continue with Google
+      </button>
+      <button class="button button-guest" id="guest-mode" type="button">Continue without signing in</button>
       <div class="auth-switch"><span id="switch-copy">New to Campus?</span> <button type="button" class="text-button" id="switch-mode">Create an account</button></div>
-      <p class="auth-note"><span>♢</span> Your records are private to your account and sync across your signed-in devices.</p>
+      <p class="auth-note"><span>♢</span> Sign in to sync records across devices. Guest records stay on this device.</p>
       <p class="creator-credit">Created by Abdullah Ibrahim</p>
     </section>
   </main>
@@ -68,7 +74,7 @@
         <div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><strong id="breadcrumb-current">Overview</strong></div>
         <div class="top-actions">
           <span class="today-label" id="today-label"></span>
-          <span class="local-save-label"><span class="live-dot"></span> Synced to your account</span>
+          <span class="local-save-label" id="storage-mode-label"><span class="live-dot"></span> Synced to your account</span>
           <button class="button button-quiet button-small" id="logout-button">Sign out</button>
           <button class="button button-primary button-small" id="top-add-button"><span>＋</span> Add student</button>
         </div>
@@ -181,7 +187,11 @@
       <div class="dialog-heading"><div><div class="eyebrow" id="form-eyebrow">NEW RECORD</div><h2 id="form-title">Add a student</h2><p id="form-description">Create a profile and enter their first subject.</p></div><button type="button" class="dialog-close" data-close-dialog aria-label="Close dialog">×</button></div>
       <div class="form-error hidden" id="form-error" role="alert"></div>
       <div class="field" id="name-field"><label for="student-name">Student name</label><input id="student-name" name="name" type="text" maxlength="80" placeholder="e.g. Alex Morgan" autocomplete="off" required></div>
-      <div class="field"><label for="subject-name">Subject</label><input id="subject-name" name="subject" type="text" maxlength="80" placeholder="e.g. Mathematics" required></div>
+      <div class="field" id="subject-field"><label for="subject-name">Subject</label><input id="subject-name" name="subject" type="text" maxlength="80" placeholder="e.g. Mathematics" required></div>
+      <div class="form-row">
+        <div class="field"><label for="test-name">Test name</label><input id="test-name" name="testName" type="text" maxlength="80" placeholder="e.g. Midterm exam" required></div>
+        <div class="field"><label for="test-date">Test date</label><input id="test-date" name="testDate" type="date" required></div>
+      </div>
       <div class="form-row">
         <div class="field"><label for="total-marks">Total marks</label><input id="total-marks" name="total" type="number" min="1" step="1" placeholder="100" required></div>
         <div class="field"><label for="obtained-marks">Marks earned</label><input id="obtained-marks" name="obtained" type="number" min="0" step="1" placeholder="85" required></div>

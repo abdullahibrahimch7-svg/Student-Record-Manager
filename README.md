@@ -7,9 +7,12 @@ A dark-themed student records website built with HTML, CSS, and JavaScript. User
 ## Features
 
 - Email and password account creation and sign-in
+- Google account sign-in
+- Guest access with records saved only in the current browser
 - Password reset and sign-out
 - Student records saved to the signed-in user's Cloud Firestore account
-- Add students, add subjects, update marks, and delete records
+- Add students and subjects, record multiple tests, edit test marks, and delete records
+- Record multiple named, dated tests for each subject and view per-subject progress graphs
 - Search, filter, and sort student records
 - Class overview and performance charts
 - CSV report export
@@ -22,16 +25,16 @@ This is a static website; it does not require npm or a local backend.
 1. Clone or download this repository.
 2. Open the project folder in Visual Studio Code.
 3. Use the **Live Server** extension to open the root `index.html` file.
-4. Sign in or create an account.
+4. Sign in, create an account, or continue as a guest.
 
-You need an internet connection to use Firebase authentication and cloud sync. Opening the page directly as a `file://` URL may prevent Firebase modules from loading; use Live Server instead.
+You need an internet connection to use Firebase authentication and cloud sync. Guest mode saves records only in the current browser and does not sync across devices; clearing browser data can remove guest records. Opening the page directly as a `file://` URL may prevent Firebase modules from loading; use Live Server instead.
 
 ## Firebase project setup
 
 The website uses Firebase Authentication and Cloud Firestore. Configure Firebase once for the website; each user creates their own account.
 
 1. Create a Firebase project and register a **Web app**.
-2. In **Authentication → Sign-in method**, enable **Email/Password**.
+2. In **Authentication → Sign-in method**, enable **Email/Password** and **Google**. For Google, also select a project support email when prompted.
 3. Create a **Cloud Firestore** database. The database ID can remain `(default)`.
 4. Copy the Firebase Web app configuration into `static/firebase-config.js`, replacing the values there.
 5. In **Authentication → Settings → Authorized domains**, add the domain used to access the website. For local testing, add `localhost` or `127.0.0.1` if needed.
@@ -57,4 +60,4 @@ During `firebase use --add`, select the Firebase project configured in `static/f
 
 Student records are stored in Cloud Firestore under each user's Firebase account and can be accessed when signed in on another device. If the browser has records from the earlier local-only version, the website offers to import them after sign-in; the local copy is retained.
 
-Use **Export report** in the dashboard to download a CSV copy of the records. Scheduled Firestore backups are optional and may incur charges. Firebase usage is subject to current quotas and pricing; review [Firebase pricing](https://firebase.google.com/pricing) before enabling paid features.
+Use **Export report** in the dashboard to download a CSV copy of all recorded tests. Older records with one score per subject remain available and appear as the first test in that subject's history. Scheduled Firestore backups are optional and may incur charges. Firebase usage is subject to current quotas and pricing; review [Firebase pricing](https://firebase.google.com/pricing) before enabling paid features.

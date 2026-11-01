@@ -205,7 +205,25 @@ tbody tr:hover { background: #fbfaff; }
 .detail-score { margin: 20px 0 16px; padding: 13px; border-radius: 9px; background: #f8f7fe; }
 .detail-score-row { display: flex; justify-content: space-between; margin-bottom: 7px; color: #64697b; font-size: 10px; }
 .detail-score-row strong { color: #5e53bd; }
-.detail-subject-list { display: grid; gap: 8px; margin: 13px 0 18px; }
+.detail-subject-list { display: grid; gap: 12px; margin: 13px 0 18px; }
+.subject-performance { min-width: 0; padding: 12px; border: 1px solid #2e3748; border-radius: 9px; background: #131925; }
+.subject-performance-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.subject-performance-heading h3 { margin: 0; color: #e0e3ed; font-size: 11px; }
+.subject-performance-heading p { margin: 4px 0 0; color: #9aa2b6; font-size: 9px; }
+.subject-chart-scroll { overflow-x: auto; margin: 6px 0; }
+.subject-chart { display: block; width: 100%; min-width: 260px; height: auto; overflow: visible; }
+.subject-chart-grid { stroke: #303849; stroke-width: 1; }
+.subject-chart-axis { fill: #929aad; font-size: 9px; }
+.subject-chart-line { fill: none; stroke: #9b8cff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.subject-chart-point { fill: #b6adff; stroke: #171d29; stroke-width: 2; }
+.test-result-list { display: grid; gap: 5px; }
+.test-result { display: flex; min-width: 0; align-items: center; gap: 8px; padding: 7px; border-top: 1px solid #293142; }
+.test-result-number { display: grid; width: 20px; height: 20px; flex: 0 0 auto; place-items: center; border-radius: 6px; background: #292543; color: #b4aaff; font-size: 9px; }
+.test-result-name { min-width: 0; flex: 1; }
+.test-result-name strong, .test-result-name small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.test-result-name strong { color: #e0e3ed; font-size: 9px; }
+.test-result-name small { margin-top: 2px; color: #929aad; font-size: 8px; }
+.test-result-score { color: #c4c9d6; font-size: 9px; white-space: nowrap; }
 .detail-subject { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px; border: 1px solid #eff0f5; border-radius: 8px; }
 .detail-subject strong, .detail-subject small { display: block; }
 .detail-subject strong { color: #50556a; font-size: 10px; }
@@ -409,6 +427,13 @@ tbody tr:hover { background: #1c2231; }
 .auth-card form { text-align: left; }
 .auth-card .field { margin-bottom: 15px; }
 .auth-submit { width: 100%; margin-top: 5px; }
+.auth-divider { display: flex; align-items: center; gap: 12px; margin: 18px 0 12px; color: #788196; font-size: 9px; }
+.auth-divider::before, .auth-divider::after { height: 1px; flex: 1; background: #2a3140; content: ""; }
+.button-google, .button-guest { width: 100%; min-height: 42px; border: 1px solid #343d50; background: #1b2230; color: #e2e5ed; }
+.button-google { gap: 10px; }
+.button-google svg { width: 16px; height: 16px; }
+.button-google:hover, .button-guest:hover { background: #242d3d; }
+.button-guest { margin-top: 9px; color: #b7bfce; }
 .auth-link { display: block; margin: 13px auto 0; padding: 4px; border: 0; background: transparent; color: #aaa1ff; font-size: 10px; font-weight: 600; }
 .auth-link:hover { color: #cbc6ff; }
 .auth-switch { margin-top: 18px; color: #aab0bf; font-size: 10px; }
