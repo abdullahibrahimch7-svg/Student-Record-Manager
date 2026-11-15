@@ -191,8 +191,8 @@ tbody tr:hover { background: #fbfaff; }
 .dialog-close { display: grid; width: 29px; height: 29px; flex: 0 0 auto; place-items: center; border: 0; border-radius: 8px; background: #f5f6f9; color: #777c8e; font-size: 20px; }
 .field { display: grid; gap: 6px; margin: 0 0 14px; }
 .field label { color: #555a6e; font-size: 10px; font-weight: 700; }
-.field input { width: 100%; height: 39px; padding: 0 11px; border: 1px solid #e8eaf0; border-radius: 7px; outline: 0; background: #fff; color: #42475b; font-size: 11px; }
-.field input:focus { border-color: #a59beb; box-shadow: 0 0 0 3px #7164dc14; }
+.field input, .field select { width: 100%; height: 39px; padding: 0 11px; border: 1px solid #e8eaf0; border-radius: 7px; outline: 0; background: #fff; color: #42475b; font-size: 11px; }
+.field input:focus, .field select:focus { border-color: #a59beb; box-shadow: 0 0 0 3px #7164dc14; }
 .field input:disabled { background: #f7f8fb; color: #8c91a2; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
@@ -402,7 +402,7 @@ tbody tr:hover { background: #1c2231; }
 .dialog-heading p, .detail-person p { color: #a3aabc; }
 .dialog-close { background: #252d3b; color: #c1c6d3; }
 .field label { color: #c2c7d4; }
-.field input { border-color: #343d50; background: #111722; color: #e4e7ef; }
+.field input, .field select { border-color: #343d50; background: #111722; color: #e4e7ef; color-scheme: dark; }
 .field input::placeholder { color: #868fa4; }
 .field input:disabled { background: #1d2431; color: #a3aabc; }
 .form-error { background: #382221; color: #ffaaa1; }

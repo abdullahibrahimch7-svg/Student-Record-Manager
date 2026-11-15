@@ -10,8 +10,9 @@ A dark-themed student records website built with HTML, CSS, and JavaScript. User
 - Google account sign-in
 - Guest access with records saved only in the current browser
 - Password reset and sign-out
+- Signed-in accounts stay available for up to 15 days between visits, then require sign-in again
 - Student records saved to the signed-in user's Cloud Firestore account
-- Add students and subjects, record multiple tests, edit test marks, and delete records
+- Add students and subjects from the dashboard or a student profile, record multiple tests, edit test marks, and delete records
 - Record multiple named, dated tests for each subject and view per-subject progress graphs
 - Search, filter, and sort student records
 - Class overview and performance charts

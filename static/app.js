@@ -36,6 +36,8 @@ const state = {
 };
 
 const LEGACY_STORAGE_KEY = "campus.student-records.v1";
+const LAST_OPENED_KEY_PREFIX = "campus.last-opened.";
+const MAX_INACTIVE_MS = 15 * 24 * 60 * 60 * 1000;
 const byId = (id) => document.getElementById(id);
 const formDialog = byId("form-dialog");
 const detailDialog = byId("detail-dialog");
@@ -391,6 +393,21 @@ async function importLegacyRecords(user) {
   }
 }
 
+function markLoginOpened(user) {
+  const key = `${LAST_OPENED_KEY_PREFIX}${user.uid}`;
+  const now = Date.now();
+  try {
+    const saved = localStorage.getItem(key);
+    const lastOpened = saved === null ? null : Number(saved);
+    const expired = Number.isFinite(lastOpened) && now - lastOpened >= MAX_INACTIVE_MS;
+    localStorage.setItem(key, String(now));
+    return expired;
+  } catch {
+    toast("This browser cannot remember the 15-day sign-in period.", true);
+    return false;
+  }
+}
+
 async function writeStudentRecord(payload) {
   const studentName = normalizeName(payload.name);
   const subjectName = normalizeName(payload.subject);
@@ -522,9 +539,14 @@ function openStudentForm(mode, student = null, subject = null, test = null) {
   studentForm.reset();
   byId("form-error").classList.add("hidden");
   byId("name-field").classList.toggle("hidden", mode !== "create");
+  byId("subject-student-field").classList.toggle("hidden", mode !== "subject" || Boolean(student));
   byId("subject-field").classList.toggle("hidden", mode !== "create" && mode !== "subject");
   byId("student-name").disabled = mode !== "create";
   byId("student-name").value = student?.name || "";
+  const studentSelect = byId("subject-student");
+  studentSelect.replaceChildren(new Option("Choose a student", ""));
+  state.students.forEach((entry) => studentSelect.add(new Option(entry.name, entry.name)));
+  studentSelect.value = student?.name || "";
   byId("subject-name").value = subject?.name || "";
   byId("test-name").value = test?.name || (mode === "test" ? `Test ${subject.tests.length + 1}` : "Test 1");
   byId("test-date").value = test?.date || localDateInputValue();
@@ -535,7 +557,9 @@ function openStudentForm(mode, student = null, subject = null, test = null) {
   if (mode === "create") {
     labels = ["NEW RECORD", "Add a student", "Create a profile and enter their first subject test.", "Save student"];
   } else if (mode === "subject") {
-    labels = ["NEW SUBJECT", `Add a subject for ${student.name}`, "Add the subject and record its first test.", "Save subject"];
+    labels = student
+      ? ["NEW SUBJECT", `Add a subject for ${student.name}`, "Add the subject and record its first test.", "Save subject"]
+      : ["NEW SUBJECT", "Add a subject", "Choose a student, then add the subject and record its first test.", "Save subject"];
   } else if (mode === "test") {
     labels = ["NEW TEST", `Add a test for ${subject.name}`, "Record another test to track progress in this subject.", "Save test"];
   } else {
@@ -648,6 +672,9 @@ studentForm.addEventListener("submit", async (event) => {
     total: byId("total-marks").value,
     obtained: byId("obtained-marks").value,
   };
+  if (state.formMode === "subject") {
+    state.editingStudent = findStudent(byId("subject-student").value);
+  }
   const button = byId("form-submit");
   button.disabled = true;
   byId("form-error").classList.add("hidden");
@@ -655,6 +682,7 @@ studentForm.addEventListener("submit", async (event) => {
     const total = Number(payload.total);
     const obtained = Number(payload.obtained);
     if (state.formMode === "create" && !normalizeName(payload.name)) throw new Error("Student name is required.");
+    if (state.formMode === "subject" && !state.editingStudent) throw new Error("Choose a student first.");
     if ((state.formMode === "create" || state.formMode === "subject") && !normalizeName(payload.subject)) {
       throw new Error("Subject name is required.");
     }
@@ -699,6 +727,13 @@ document.addEventListener("click", async (event) => {
   if (target.dataset.navigate) setView(target.dataset.navigate);
   if (target.hasAttribute("data-open-add")) openStudentForm("create");
   if (target.id === "top-add-button") openStudentForm("create");
+  if (target.id === "top-add-subject-button") {
+    if (state.students.length) {
+      openStudentForm("subject");
+    } else {
+      toast("Add a student before adding a subject.", true);
+    }
+  }
   if (target.id === "logout-button") {
     if (state.isGuest) {
       state.isGuest = false;
@@ -853,6 +888,7 @@ async function initializeFirebase() {
     return;
   }
 
+  authScreen.classList.add("hidden");
   try {
     const firebaseApp = initializeApp(firebaseConfig);
     auth = getAuth(firebaseApp);
@@ -862,6 +898,17 @@ async function initializeFirebase() {
       if (state.unsubscribeStudents) {
         state.unsubscribeStudents();
         state.unsubscribeStudents = null;
+      }
+      if (user && markLoginOpened(user)) {
+        showAuthError("Please sign in again after 15 days away.");
+        try {
+          await signOut(auth);
+          return;
+        } catch (error) {
+          toast(firebaseErrorMessage(error), true);
+          user = auth.currentUser;
+        }
+        if (!user) return;
       }
       state.user = user;
       state.isGuest = false;
@@ -905,8 +952,12 @@ async function initializeFirebase() {
       } catch (error) {
         toast(firebaseErrorMessage(error), true);
       }
-    }, (error) => showAuthError(firebaseErrorMessage(error)));
+    }, (error) => {
+      authScreen.classList.remove("hidden");
+      showAuthError(firebaseErrorMessage(error));
+    });
   } catch (error) {
+    authScreen.classList.remove("hidden");
     showAuthError(firebaseErrorMessage(error));
     byId("auth-submit").disabled = true;
   }
