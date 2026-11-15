@@ -29,6 +29,7 @@ button { cursor: pointer; }
 .brand-mark { display: grid; width: 39px; height: 39px; place-items: center; border-radius: 12px; background: #7164dc; color: white; font: 800 21px "Manrope", sans-serif; }
 .brand strong { display: block; font: 800 20px "Manrope", sans-serif; letter-spacing: -.8px; }
 .brand small { display: block; margin-top: 1px; color: #a4a8b7; font-size: 8px; font-weight: 700; letter-spacing: 1.5px; }
+.brand small.brand-creator { margin-top: 3px; color: #a4a8b7; font-size: 9px; letter-spacing: 0; }
 .nav-caption, .eyebrow { color: #9a9daf; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; }
 .nav-caption { padding-left: 12px; margin-bottom: 12px; }
 .side-nav { display: grid; gap: 5px; }
@@ -256,7 +257,7 @@ tbody tr:hover { background: #fbfaff; }
   .sidebar { position: sticky; z-index: 4; top: 0; width: 100%; height: auto; flex-direction: row; align-items: center; justify-content: space-between; padding: 8px 13px; border-right: 0; border-bottom: 1px solid #242c3b; }
   .brand { flex: 0 0 auto; margin: 0; }
   .brand-mark { width: 35px; height: 35px; }
-  .brand > span:last-child, .nav-caption, .nav-link .nav-count, .sidebar-bottom { display: none; }
+  .brand > span:last-child > small:not(.brand-creator), .nav-caption, .nav-link .nav-count, .sidebar-bottom { display: none; }
   .side-nav { display: flex; width: auto; gap: 4px; }
   .nav-link { width: 39px; height: 39px; justify-content: center; padding: 7px; font-size: 0; }
   .nav-icon { width: 24px; font-size: 18px; }
